@@ -1,6 +1,8 @@
 package com.example.shop.controller;
 
+import com.example.shop.exceptions.UserAlreadyExistsException;
 import com.example.shop.model.AppUser;
+import com.example.shop.model.CustomResponse;
 import com.example.shop.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -11,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;
+import java.util.HashMap;
 
 @RestController
 @RequestMapping("/auth")
@@ -19,9 +22,16 @@ public class UserController {
     private UserService userService;
 
     @PostMapping("register")
-    public ResponseEntity<AppUser> register(@Valid @RequestBody AppUser user) {
-        AppUser appUser = userService.saveUser(user);
-        return new ResponseEntity<>(appUser, HttpStatus.CREATED);
+    public ResponseEntity<?> register(@Valid @RequestBody AppUser user) {
+        AppUser appUser;
+        HashMap<String, Object> response;
+        try {
+            appUser = userService.saveUser(user);
+        } catch (UserAlreadyExistsException e) {
+            return CustomResponse.generate("User already exists.", HttpStatus.CONFLICT);
+        }
+
+        return CustomResponse.generate("Successfully registered.", appUser, HttpStatus.CREATED);
     }
 
 }
