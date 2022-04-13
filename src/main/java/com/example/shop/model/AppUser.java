@@ -1,10 +1,9 @@
 package com.example.shop.model;
 
+import io.swagger.v3.oas.annotations.media.Schema;
+
 import javax.persistence.*;
-import javax.validation.constraints.Email;
-import javax.validation.constraints.Min;
-import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.Size;
+import javax.validation.constraints.*;
 
 @Entity
 @Table(name = "users")
@@ -12,14 +11,16 @@ public class AppUser {
 
   @Id
   @GeneratedValue(strategy = GenerationType.AUTO)
+  @Schema(hidden = true) // swagger related
   private long id;
 
   @Column(unique = true)
   @Email
-  @NotEmpty
+  @NotBlank
   private String email;
-  @Size(min = 4)
-  @NotEmpty
+
+  @Size(min = 4, max = 50)
+  @NotBlank
   private String password;
 
   public AppUser() {
@@ -31,9 +32,9 @@ public class AppUser {
     this.password = password;
   }
 
-  // public long getId() {
-  //   return id;
-  // }
+   public long getId() {
+     return id;
+   }
 
   public String getEmail() {
     return email;
