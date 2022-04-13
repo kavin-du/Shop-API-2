@@ -1,12 +1,10 @@
 package com.example.shop.model;
 
-import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.Schema;
 
 import javax.persistence.*;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import java.util.Objects;
 
@@ -14,7 +12,7 @@ import java.util.Objects;
 public class Product {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Schema(hidden = true) // swagger related
+    @Schema(hidden = false) // swagger related
     private long id;
 
     @Column(name = "product_name")

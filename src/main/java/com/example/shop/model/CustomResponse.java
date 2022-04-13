@@ -6,6 +6,9 @@ import org.springframework.http.ResponseEntity;
 import java.util.HashMap;
 
 public class CustomResponse {
+    private String message;
+    private Object data;
+
     public static ResponseEntity<HashMap<String, Object>> generate(String message, Object data, HttpStatus code) {
         HashMap<String, Object> map = new HashMap<>();
         map.put("message", message);
@@ -19,4 +22,11 @@ public class CustomResponse {
         return new ResponseEntity<>(map, code);
     }
 
+    public String getMessage() {
+        return message;
+    }
+
+    public Object getData() {
+        return data;
+    }
 }

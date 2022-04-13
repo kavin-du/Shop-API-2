@@ -5,9 +5,7 @@ import com.example.shop.exceptions.ResourceNotFoundException;
 import com.example.shop.model.Product;
 import com.example.shop.repository.ProductRepo;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.MethodParameter;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.MethodArgumentNotValidException;
 
 import javax.validation.ConstraintViolation;
 import javax.validation.ConstraintViolationException;
