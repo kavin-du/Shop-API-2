@@ -3,8 +3,10 @@ package com.example.shop.controller;
 import com.example.shop.exceptions.ResourceAlreadyExistsException;
 import com.example.shop.exceptions.ResourceNotFoundException;
 import com.example.shop.model.CustomResponse;
+import com.example.shop.model.OrderRequest;
+import com.example.shop.model.Order;
 import com.example.shop.model.Product;
-import com.example.shop.service.ProductService;
+import com.example.shop.service.OrderService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.ArraySchema;
@@ -22,95 +24,95 @@ import javax.validation.Valid;
 import java.util.Map;
 
 @RestController
-@RequestMapping("/products")
-@Tag(name = "Products")
-public class ProductController {
+@RequestMapping("/orders")
+@Tag(name = "Orders")
+public class OrderController {
     @Autowired
-    ProductService productService;
+    OrderService orderService;
 
     @PostMapping()
-    @Operation(summary = "Create a new Product") // swagger related
+    @Operation(summary = "Create a new Order") // swagger related
     @ApiResponse(
             responseCode = "201",
             content = @Content(
                     mediaType = "application/json",
-                    schema = @Schema(implementation = Product.class)
+                    schema = @Schema(implementation = Order.class)
             )
     )
-    public ResponseEntity<?> create(@Valid @RequestBody Product product) {
-        Product p;
+    public ResponseEntity<?> create(@Valid @RequestBody OrderRequest orderRequest) {
+        Order order;
         try {
-            p = productService.create(product);
-        } catch (ResourceAlreadyExistsException e) {
-            return CustomResponse.generate(e.getMessage(), HttpStatus.CONFLICT);
+            order = orderService.createOrder(orderRequest);
+        } catch (ResourceNotFoundException e) {
+            return CustomResponse.generate(e.getMessage(), HttpStatus.NOT_FOUND);
         }
-        return new ResponseEntity<>(p, HttpStatus.CREATED);
+        return new ResponseEntity<>(order, HttpStatus.CREATED);
     }
 
     @GetMapping()
-    @Operation(summary = "Get all products")
+    @Operation(summary = "Get all orders")
     @ApiResponse(
             responseCode = "200",
             content = @Content(
                     mediaType = "application/json",
-                    array = @ArraySchema(schema = @Schema(implementation = Product.class))
+                    array = @ArraySchema(schema = @Schema(implementation = Order.class))
             )
     )
     public ResponseEntity<?> getAll() {
-        return new ResponseEntity<>(productService.getAll(), HttpStatus.OK);
+        return new ResponseEntity<>(orderService.getAll(), HttpStatus.OK);
     }
 
     @DeleteMapping("{id}")
-    @Operation(summary = "Remove a product")
+    @Operation(summary = "Remove an order")
     @ApiResponse(
             responseCode = "200",
             content = @Content(
                     mediaType = "application/json",
-                    schema = @Schema(implementation = Product.class)
+                    schema = @Schema(implementation = Order.class)
             )
     )
-    public ResponseEntity<?> remove(@PathVariable("id") int id) {
-        Product p;
+    public ResponseEntity<?> remove(@PathVariable("id") long id) {
+        Order order;
         try {
-            p = productService.remove(id);
+            order = orderService.remove(id);
         } catch (ResourceNotFoundException e) {
             return CustomResponse.generate(e.getMessage(), HttpStatus.NOT_FOUND);
         }
-        return new ResponseEntity<>(p, HttpStatus.OK);
+        return new ResponseEntity<>(order, HttpStatus.OK);
     }
 
     @GetMapping("{id}")
-    @Operation(summary = "Get single product")
+    @Operation(summary = "Get single order")
     @ApiResponse(
             responseCode = "200",
             content = @Content(
                     mediaType = "application/json",
-                    schema = @Schema(implementation = Product.class)
+                    schema = @Schema(implementation = Order.class)
             )
     )
-    public ResponseEntity<?> getOne(@PathVariable("id") int id) {
-        Product p;
+    public ResponseEntity<?> getOne(@PathVariable("id") long id) {
+        Order order;
         try {
-            p = productService.getOne(id);
+            order = orderService.getOne(id);
         } catch (ResourceNotFoundException e) {
             return CustomResponse.generate(e.getMessage(), HttpStatus.NOT_FOUND);
         }
-        return new ResponseEntity<>(p, HttpStatus.OK);
+        return new ResponseEntity<>(order, HttpStatus.OK);
     }
 
-    @PatchMapping("{id}")
-    @Operation(summary = "Update a product")
+    @PatchMapping()
+    @Operation(summary = "Update an order")
     @ApiResponse(
             responseCode = "200",
             content = @Content(
                     mediaType = "application/json",
-                    schema = @Schema(implementation = Product.class)
+                    schema = @Schema(implementation = Order.class)
             )
     )
-    public ResponseEntity<?> update(@PathVariable int id, @Parameter(schema = @Schema(implementation = Product.class)) @RequestBody Map<String, Object> data) {
-        Product p;
+    public ResponseEntity<?> update(@Valid @RequestBody OrderRequest data) {
+        Order order;
         try {
-            p = productService.update(id, data);
+            order = orderService.update(data);
         } catch (ResourceNotFoundException e) {
             return CustomResponse.generate(e.getMessage(), HttpStatus.NOT_FOUND);
         } catch (ConstraintViolationException e) {
@@ -118,6 +120,8 @@ public class ProductController {
         } catch (Exception e) {
             return CustomResponse.generate(e.getMessage(), HttpStatus.BAD_REQUEST);
         }
-        return new ResponseEntity<>(p, HttpStatus.OK);
+        return new ResponseEntity<>(order, HttpStatus.OK);
     }
 }
+
+
