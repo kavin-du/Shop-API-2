@@ -27,6 +27,12 @@ public class Product {
     public Product() {
     }
 
+    public Product(long id, String productName, double price) {
+        this.id = id;
+        this.productName = productName;
+        this.price = price;
+    }
+
     public Product(String productName, double price) {
         this.productName = productName;
         this.price = price;

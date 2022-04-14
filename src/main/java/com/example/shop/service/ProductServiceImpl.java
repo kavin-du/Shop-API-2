@@ -17,11 +17,13 @@ import java.util.Set;
 
 @Service
 public class ProductServiceImpl implements ProductService{
-    @Autowired
-    ProductRepo productRepo;
+    private final Validator validator;
+    private final ProductRepo productRepo;
 
-    @Autowired
-    Validator validator;
+    public ProductServiceImpl(ProductRepo productRepo, Validator validator) {
+        this.productRepo = productRepo;
+        this.validator = validator;
+    }
 
     @Override
     public Product create(Product product) throws ResourceAlreadyExistsException {

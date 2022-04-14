@@ -19,7 +19,13 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-validation:2.6.6'
 	implementation 'org.springdoc:springdoc-openapi-ui:1.6.7'
 	developmentOnly 'org.springframework.boot:spring-boot-devtools'
+
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+	testImplementation 'org.junit.jupiter:junit-jupiter:5.8.2'
+	testImplementation 'org.assertj:assertj-core:3.22.0'
+//	testImplementation 'org.mockito:mockito-all:1.10.19'
+//	testImplementation 'org.mockito:mockito-junit-jupiter:4.4.0'
+
 	runtimeOnly 'com.h2database:h2:2.1.210'
 
 }
