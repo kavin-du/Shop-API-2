@@ -69,7 +69,7 @@ public class ProductController {
                     schema = @Schema(implementation = Product.class)
             )
     )
-    public ResponseEntity<?> remove(@PathVariable("id") int id) {
+    public ResponseEntity<?> remove(@PathVariable("id") long id) {
         Product p;
         try {
             p = productService.remove(id);
@@ -88,7 +88,7 @@ public class ProductController {
                     schema = @Schema(implementation = Product.class)
             )
     )
-    public ResponseEntity<?> getOne(@PathVariable("id") int id) {
+    public ResponseEntity<?> getOne(@PathVariable("id") long id) {
         Product p;
         try {
             p = productService.getOne(id);
@@ -107,7 +107,7 @@ public class ProductController {
                     schema = @Schema(implementation = Product.class)
             )
     )
-    public ResponseEntity<?> update(@PathVariable int id, @Parameter(schema = @Schema(implementation = Product.class)) @RequestBody Map<String, Object> data) {
+    public ResponseEntity<?> update(@PathVariable long id, @Parameter(schema = @Schema(implementation = Product.class)) @RequestBody Map<String, Object> data) {
         Product p;
         try {
             p = productService.update(id, data);

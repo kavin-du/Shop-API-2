@@ -33,8 +33,8 @@ public class ProductServiceImpl implements ProductService{
     }
 
     @Override
-    public Product getOne(int id) throws ResourceNotFoundException {
-        Optional<Product> p = productRepo.findById((long) id);
+    public Product getOne(long id) throws ResourceNotFoundException {
+        Optional<Product> p = productRepo.findById(id);
         if(p.isEmpty()) {
             throw new ResourceNotFoundException("Product not found");
         }
@@ -42,18 +42,18 @@ public class ProductServiceImpl implements ProductService{
     }
 
     @Override
-    public Product remove(int id) throws ResourceNotFoundException {
-        Optional<Product> p = productRepo.findById((long) id);
+    public Product remove(long id) throws ResourceNotFoundException {
+        Optional<Product> p = productRepo.findById(id);
         if(p.isEmpty()) {
             throw new ResourceNotFoundException("Product not found");
         }
-        productRepo.deleteById((long) id);
+        productRepo.deleteById(id);
         return p.get();
     }
 
     @Override
-    public Product update(int id, Map<String, Object> data) throws ResourceNotFoundException, ConstraintViolationException, Exception {
-        Optional<Product> p = productRepo.findById((long) id);
+    public Product update(long id, Map<String, Object> data) throws ResourceNotFoundException, ConstraintViolationException, Exception {
+        Optional<Product> p = productRepo.findById(id);
         if(p.isEmpty()) {
             throw new ResourceNotFoundException("Product not found");
         }

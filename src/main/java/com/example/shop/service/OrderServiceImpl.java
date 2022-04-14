@@ -13,7 +13,6 @@ import javax.validation.ConstraintViolation;
 import javax.validation.ConstraintViolationException;
 import javax.validation.Validator;
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
 
@@ -63,14 +62,19 @@ public class OrderServiceImpl implements OrderService{
     }
 
     @Override
-    public Order update(OrderRequest data) throws ResourceNotFoundException, ConstraintViolationException {
+    public Order update(long id, OrderRequest data) throws ResourceNotFoundException, ConstraintViolationException {
         Optional<Product> p = productRepo.findById(data.getProductId());
         if(p.isEmpty()) {
             throw new ResourceNotFoundException("Product not found");
         }
-        Product product = p.get();
 
-        Order order = new Order(product, data.getCount());
+        Optional<Order> o = orderRepo.findById(id);
+        if(o.isEmpty()) {
+            throw new ResourceNotFoundException("Order not found");
+        }
+
+        Order order = o.get();
+        order.setCount(data.getCount()); // update the count
 
         Set<ConstraintViolation<Order>> violations = validator.validate(order);
         if(!violations.isEmpty()) {

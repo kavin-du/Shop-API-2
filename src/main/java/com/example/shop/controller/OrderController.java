@@ -1,14 +1,11 @@
 package com.example.shop.controller;
 
-import com.example.shop.exceptions.ResourceAlreadyExistsException;
 import com.example.shop.exceptions.ResourceNotFoundException;
 import com.example.shop.model.CustomResponse;
 import com.example.shop.model.OrderRequest;
 import com.example.shop.model.Order;
-import com.example.shop.model.Product;
 import com.example.shop.service.OrderService;
 import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.ArraySchema;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -100,7 +97,7 @@ public class OrderController {
         return new ResponseEntity<>(order, HttpStatus.OK);
     }
 
-    @PatchMapping()
+    @PatchMapping("{id}")
     @Operation(summary = "Update an order")
     @ApiResponse(
             responseCode = "200",
@@ -109,10 +106,10 @@ public class OrderController {
                     schema = @Schema(implementation = Order.class)
             )
     )
-    public ResponseEntity<?> update(@Valid @RequestBody OrderRequest data) {
+    public ResponseEntity<?> update(@PathVariable long id, @Valid @RequestBody OrderRequest data) {
         Order order;
         try {
-            order = orderService.update(data);
+            order = orderService.update(id, data);
         } catch (ResourceNotFoundException e) {
             return CustomResponse.generate(e.getMessage(), HttpStatus.NOT_FOUND);
         } catch (ConstraintViolationException e) {

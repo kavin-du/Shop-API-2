@@ -9,6 +9,7 @@ import javax.validation.constraints.NotNull;
 import java.util.Objects;
 
 @Entity
+@Table(name = "products")
 public class Product {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -26,8 +27,7 @@ public class Product {
     public Product() {
     }
 
-    public Product(long id, String productName, double price) {
-        this.id = id;
+    public Product(String productName, double price) {
         this.productName = productName;
         this.price = price;
     }
