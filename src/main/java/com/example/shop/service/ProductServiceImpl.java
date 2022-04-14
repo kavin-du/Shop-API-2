@@ -4,7 +4,6 @@ import com.example.shop.exceptions.ResourceAlreadyExistsException;
 import com.example.shop.exceptions.ResourceNotFoundException;
 import com.example.shop.model.Product;
 import com.example.shop.repository.ProductRepo;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.validation.ConstraintViolation;

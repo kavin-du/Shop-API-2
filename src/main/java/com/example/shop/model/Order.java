@@ -23,6 +23,12 @@ public class Order {
     public Order() {
     }
 
+    public Order(long id, Product product, int count) {
+        this.id = id;
+        this.product = product;
+        this.count = count;
+    }
+
     public Order(Product product, int count) {
         this.product = product;
         this.count = count;

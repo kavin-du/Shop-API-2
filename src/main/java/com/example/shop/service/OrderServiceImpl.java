@@ -6,7 +6,6 @@ import com.example.shop.model.Order;
 import com.example.shop.model.Product;
 import com.example.shop.repository.OrderRepo;
 import com.example.shop.repository.ProductRepo;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.validation.ConstraintViolation;
@@ -18,14 +17,15 @@ import java.util.Set;
 
 @Service
 public class OrderServiceImpl implements OrderService{
-    @Autowired
-    OrderRepo orderRepo;
+    private final OrderRepo orderRepo;
+    private final ProductRepo productRepo;
+    private final Validator validator;
 
-    @Autowired
-    ProductRepo productRepo;
-
-    @Autowired
-    Validator validator;
+    public OrderServiceImpl(OrderRepo orderRepo, ProductRepo productRepo, Validator validator) {
+        this.orderRepo = orderRepo;
+        this.productRepo = productRepo;
+        this.validator = validator;
+    }
 
     @Override
     public Order createOrder(OrderRequest orderRequest) throws ResourceNotFoundException {

@@ -4,7 +4,6 @@ import com.example.shop.exceptions.ResourceNotFoundException;
 import com.example.shop.model.Product;
 import com.example.shop.repository.ProductRepo;
 import org.assertj.core.api.Assertions;
-import org.hamcrest.Matchers;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
