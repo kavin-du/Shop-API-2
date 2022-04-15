@@ -7,6 +7,7 @@ import com.example.shop.model.Order;
 import javax.validation.ConstraintViolationException;
 import java.util.List;
 
+// interface for creating orders
 public interface OrderService {
     Order createOrder(OrderRequest order) throws ResourceNotFoundException;
     List<Order> getAll();

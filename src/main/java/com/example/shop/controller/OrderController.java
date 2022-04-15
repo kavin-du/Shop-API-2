@@ -26,13 +26,13 @@ public class OrderController {
     @Autowired
     OrderService orderService;
 
-    @PostMapping()
+    @PostMapping() // post request
     @Operation(summary = "Create a new Order") // swagger related
-    @ApiResponse(
+    @ApiResponse( // swagger related
             responseCode = "201",
             content = @Content(
                     mediaType = "application/json",
-                    schema = @Schema(implementation = Order.class)
+                    schema = @Schema(implementation = Order.class) // response type
             )
     )
     public ResponseEntity<?> create(@Valid @RequestBody OrderRequest orderRequest) {
@@ -40,31 +40,34 @@ public class OrderController {
         try {
             order = orderService.createOrder(orderRequest);
         } catch (ResourceNotFoundException e) {
+            // return the error message as response
             return CustomResponse.generate(e.getMessage(), HttpStatus.NOT_FOUND);
         }
+        // return the created product
         return new ResponseEntity<>(order, HttpStatus.CREATED);
     }
 
-    @GetMapping()
-    @Operation(summary = "Get all orders")
-    @ApiResponse(
+    @GetMapping() // get request
+    @Operation(summary = "Get all orders") // swagger related
+    @ApiResponse( // swagger related
             responseCode = "200",
             content = @Content(
                     mediaType = "application/json",
-                    array = @ArraySchema(schema = @Schema(implementation = Order.class))
+                    array = @ArraySchema(schema = @Schema(implementation = Order.class)) // response type
             )
     )
     public ResponseEntity<?> getAll() {
+        // return all the orders from the database
         return new ResponseEntity<>(orderService.getAll(), HttpStatus.OK);
     }
 
-    @DeleteMapping("{id}")
-    @Operation(summary = "Remove an order")
-    @ApiResponse(
+    @DeleteMapping("{id}") // delete request
+    @Operation(summary = "Remove an order") // swagger related
+    @ApiResponse( // swagger related
             responseCode = "200",
             content = @Content(
                     mediaType = "application/json",
-                    schema = @Schema(implementation = Order.class)
+                    schema = @Schema(implementation = Order.class) // response type
             )
     )
     public ResponseEntity<?> remove(@PathVariable("id") long id) {
@@ -72,18 +75,20 @@ public class OrderController {
         try {
             order = orderService.remove(id);
         } catch (ResourceNotFoundException e) {
+            // return the error message as response
             return CustomResponse.generate(e.getMessage(), HttpStatus.NOT_FOUND);
         }
+        // return a copy of the deleted order
         return new ResponseEntity<>(order, HttpStatus.OK);
     }
 
-    @GetMapping("{id}")
-    @Operation(summary = "Get single order")
-    @ApiResponse(
+    @GetMapping("{id}") // get request
+    @Operation(summary = "Get single order") // swagger related
+    @ApiResponse( // swagger related
             responseCode = "200",
             content = @Content(
                     mediaType = "application/json",
-                    schema = @Schema(implementation = Order.class)
+                    schema = @Schema(implementation = Order.class) // response type
             )
     )
     public ResponseEntity<?> getOne(@PathVariable("id") long id) {
@@ -91,18 +96,20 @@ public class OrderController {
         try {
             order = orderService.getOne(id);
         } catch (ResourceNotFoundException e) {
+            // return the error message as response
             return CustomResponse.generate(e.getMessage(), HttpStatus.NOT_FOUND);
         }
+        // return the requested order
         return new ResponseEntity<>(order, HttpStatus.OK);
     }
 
-    @PatchMapping("{id}")
-    @Operation(summary = "Update an order")
-    @ApiResponse(
+    @PatchMapping("{id}") // patch request
+    @Operation(summary = "Update an order") // swagger related
+    @ApiResponse( // swagger related
             responseCode = "200",
             content = @Content(
                     mediaType = "application/json",
-                    schema = @Schema(implementation = Order.class)
+                    schema = @Schema(implementation = Order.class) // response type
             )
     )
     public ResponseEntity<?> update(@PathVariable long id, @Valid @RequestBody OrderRequest data) {
@@ -110,12 +117,16 @@ public class OrderController {
         try {
             order = orderService.update(id, data);
         } catch (ResourceNotFoundException e) {
+            // return the error message as response
             return CustomResponse.generate(e.getMessage(), HttpStatus.NOT_FOUND);
         } catch (ConstraintViolationException e) {
+            // return the error message as response
             return CustomResponse.generate(e.getMessage(), HttpStatus.BAD_REQUEST);
         } catch (Exception e) {
+            // return the error message as response
             return CustomResponse.generate(e.getMessage(), HttpStatus.BAD_REQUEST);
         }
+        // return the updated order
         return new ResponseEntity<>(order, HttpStatus.OK);
     }
 }

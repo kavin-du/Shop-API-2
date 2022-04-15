@@ -10,7 +10,8 @@ These two files contain the unit tests for all the services in the application.
 Click on the play button in front of each class name to run all the tests.
 
 ## 2. Set up a MySQL database
-Here I will be using Docker to deploy a MySQL container. If you know other ways to set up a database, please skip this step.
+Here I will be using Docker to deploy a MySQL container. If you know other ways to set up a database, please skip this step after adding 
+the username and password of the database to `src/main/resources/application.properties` file.
 
 i) You need to have Docker Desktop installed on your computer.
 [https://www.docker.com/products/docker-desktop/](https://www.docker.com/products/docker-desktop/)

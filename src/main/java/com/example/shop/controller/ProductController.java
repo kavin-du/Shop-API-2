@@ -25,12 +25,12 @@ import java.util.Map;
 @RequestMapping("/products")
 @Tag(name = "Products")
 public class ProductController {
-    @Autowired
+    @Autowired // using singleton instance of product service
     ProductService productService;
 
-    @PostMapping()
+    @PostMapping() // post request
     @Operation(summary = "Create a new Product") // swagger related
-    @ApiResponse(
+    @ApiResponse( // swagger related
             responseCode = "201",
             content = @Content(
                     mediaType = "application/json",
@@ -42,31 +42,34 @@ public class ProductController {
         try {
             p = productService.create(product);
         } catch (ResourceAlreadyExistsException e) {
+            // return the error message as response
             return CustomResponse.generate(e.getMessage(), HttpStatus.CONFLICT);
         }
+        // return the created product
         return new ResponseEntity<>(p, HttpStatus.CREATED);
     }
 
-    @GetMapping()
-    @Operation(summary = "Get all products")
-    @ApiResponse(
+    @GetMapping() // get request
+    @Operation(summary = "Get all products") // swagger related
+    @ApiResponse( // swagger related
             responseCode = "200",
             content = @Content(
                     mediaType = "application/json",
-                    array = @ArraySchema(schema = @Schema(implementation = Product.class))
+                    array = @ArraySchema(schema = @Schema(implementation = Product.class))// response type
             )
     )
     public ResponseEntity<?> getAll() {
+        // return all products from the database
         return new ResponseEntity<>(productService.getAll(), HttpStatus.OK);
     }
 
-    @DeleteMapping("{id}")
-    @Operation(summary = "Remove a product")
-    @ApiResponse(
+    @DeleteMapping("{id}") // delete request
+    @Operation(summary = "Remove a product") // swagger related
+    @ApiResponse( // swagger related
             responseCode = "200",
             content = @Content(
                     mediaType = "application/json",
-                    schema = @Schema(implementation = Product.class)
+                    schema = @Schema(implementation = Product.class)// response type
             )
     )
     public ResponseEntity<?> remove(@PathVariable("id") long id) {
@@ -74,18 +77,20 @@ public class ProductController {
         try {
             p = productService.remove(id);
         } catch (ResourceNotFoundException e) {
+            // return the error message as response
             return CustomResponse.generate(e.getMessage(), HttpStatus.NOT_FOUND);
         }
+        // return a copy of the removed product
         return new ResponseEntity<>(p, HttpStatus.OK);
     }
 
-    @GetMapping("{id}")
-    @Operation(summary = "Get single product")
-    @ApiResponse(
+    @GetMapping("{id}") // get request
+    @Operation(summary = "Get single product") // swagger related
+    @ApiResponse( // swagger related
             responseCode = "200",
             content = @Content(
                     mediaType = "application/json",
-                    schema = @Schema(implementation = Product.class)
+                    schema = @Schema(implementation = Product.class)// response type
             )
     )
     public ResponseEntity<?> getOne(@PathVariable("id") long id) {
@@ -93,18 +98,20 @@ public class ProductController {
         try {
             p = productService.getOne(id);
         } catch (ResourceNotFoundException e) {
+            // return the error message as response
             return CustomResponse.generate(e.getMessage(), HttpStatus.NOT_FOUND);
         }
+        // return the requested product
         return new ResponseEntity<>(p, HttpStatus.OK);
     }
 
-    @PatchMapping("{id}")
-    @Operation(summary = "Update a product")
-    @ApiResponse(
+    @PatchMapping("{id}") // patch request
+    @Operation(summary = "Update a product") // swagger related
+    @ApiResponse( // swagger related
             responseCode = "200",
             content = @Content(
                     mediaType = "application/json",
-                    schema = @Schema(implementation = Product.class)
+                    schema = @Schema(implementation = Product.class) // response type
             )
     )
     public ResponseEntity<?> update(@PathVariable long id, @Parameter(schema = @Schema(implementation = Product.class)) @RequestBody Map<String, Object> data) {
@@ -112,12 +119,16 @@ public class ProductController {
         try {
             p = productService.update(id, data);
         } catch (ResourceNotFoundException e) {
+            // return the error message as response
             return CustomResponse.generate(e.getMessage(), HttpStatus.NOT_FOUND);
         } catch (ConstraintViolationException e) {
+            // return the error message as response
             return CustomResponse.generate(e.getMessage(), HttpStatus.BAD_REQUEST);
         } catch (Exception e) {
+            // return the error message as response
             return CustomResponse.generate(e.getMessage(), HttpStatus.BAD_REQUEST);
         }
+        // return the updated product
         return new ResponseEntity<>(p, HttpStatus.OK);
     }
 }

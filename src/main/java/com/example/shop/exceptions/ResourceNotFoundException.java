@@ -1,5 +1,6 @@
 package com.example.shop.exceptions;
 
+// custom exception for non-existing resources
 public class ResourceNotFoundException extends Exception{
     public ResourceNotFoundException() {
     }

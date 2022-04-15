@@ -8,6 +8,7 @@ import javax.validation.ConstraintViolationException;
 import java.util.List;
 import java.util.Map;
 
+// interface for creating products
 public interface ProductService {
     Product create(Product product) throws ResourceAlreadyExistsException;
     List<Product> getAll();

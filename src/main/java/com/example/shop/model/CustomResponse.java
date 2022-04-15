@@ -5,6 +5,7 @@ import org.springframework.http.ResponseEntity;
 
 import java.util.HashMap;
 
+// custom response as a json map
 public class CustomResponse {
     private String message;
     private Object data;

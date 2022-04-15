@@ -1,5 +1,6 @@
 package com.example.shop.exceptions;
 
+// custom exception for duplicate resources
 public class ResourceAlreadyExistsException extends  Exception {
     public ResourceAlreadyExistsException() {
     }

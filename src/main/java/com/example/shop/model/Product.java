@@ -24,9 +24,11 @@ public class Product {
     @NotNull
     private double price;
 
+    // no args constructor
     public Product() {
     }
 
+    // all args constructor
     public Product(long id, String productName, double price) {
         this.id = id;
         this.productName = productName;

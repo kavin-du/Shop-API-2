@@ -20,9 +20,11 @@ public class Order {
     @NotNull
     private int count;
 
+    // no args constructor
     public Order() {
     }
 
+    // all args constructor
     public Order(long id, Product product, int count) {
         this.id = id;
         this.product = product;
@@ -34,6 +36,7 @@ public class Order {
         this.count = count;
     }
 
+    // getters and setters
     public long getId() {
         return id;
     }

@@ -1,8 +1,8 @@
 package com.example.shop.errorhandling;
 
 public class Violation {
-  private final String fieldName;
-  private final String message;
+  private final String fieldName; // name of the violated field
+  private final String message; // binded error message
 
   public Violation(String fieldName, String message) {
     this.fieldName = fieldName;

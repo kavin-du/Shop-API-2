@@ -13,22 +13,28 @@ import javax.validation.ConstraintViolationException;
 
 @ControllerAdvice
 class ErrorHandlingControllerAdvice {
+    // exception handler for ConstraintViolationException
     @ExceptionHandler(ConstraintViolationException.class)
-    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ResponseStatus(HttpStatus.BAD_REQUEST) // response status code
     @ResponseBody
     ValidationErrorResponse onConstraintValidationException (ConstraintViolationException e) {
         ValidationErrorResponse error = new ValidationErrorResponse();
+
+        // iterate though all the errors and create a single error
         for(ConstraintViolation violation: e.getConstraintViolations()) {
             error.getViolations().add(new Violation(violation.getPropertyPath().toString(), violation.getMessage()));
         }
         return error;
     }
 
+    // exception handler for MethodArgumentNotValidException
     @ExceptionHandler(MethodArgumentNotValidException.class)
-    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ResponseStatus(HttpStatus.BAD_REQUEST) // response status code
     @ResponseBody
     ValidationErrorResponse onMethodArgumentNotValidException (MethodArgumentNotValidException e) {
         ValidationErrorResponse error = new ValidationErrorResponse();
+
+        // iterate though all the errors and create a single error
         for(FieldError fieldError: e.getBindingResult().getFieldErrors()) {
             error.getViolations().add(new Violation(fieldError.getField(), fieldError.getDefaultMessage()));
         }

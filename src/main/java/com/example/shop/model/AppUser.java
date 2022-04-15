@@ -23,15 +23,18 @@ public class AppUser {
   @NotBlank
   private String password;
 
+  // no args constructor
   public AppUser() {
   }
 
+  // all args constructor
   public AppUser(long id, String email, String password) {
     this.id = id;
     this.email = email;
     this.password = password;
   }
 
+  // getters and setters
    public long getId() {
      return id;
    }
