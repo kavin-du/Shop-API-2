@@ -1,6 +1,8 @@
 package com.example.shop;
 
+import com.example.shop.model.OrderRequest;
 import com.example.shop.model.Product;
+import com.example.shop.service.OrderService;
 import com.example.shop.service.ProductService;
 import io.swagger.v3.oas.annotations.OpenAPIDefinition;
 import io.swagger.v3.oas.annotations.info.Info;
@@ -18,11 +20,19 @@ public class ShopApplication {
 	}
 
 	@Bean
-	CommandLineRunner run(ProductService productService) {
+	CommandLineRunner run(ProductService productService, OrderService orderService) {
+		// populating the database with some initial values
 		return args -> {
+			// adding products
 			productService.create(new Product("first product", 12.55));
 			productService.create(new Product("second product", 25.4));
 			productService.create(new Product("third product", 41.88));
+
+			// adding orders
+			orderService.createOrder(new OrderRequest(1, 12));
+			orderService.createOrder(new OrderRequest(2, 15));
+			orderService.createOrder(new OrderRequest(3, 6));
+
 		};
 	}
 
