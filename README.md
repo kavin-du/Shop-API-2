@@ -9,6 +9,10 @@ These two files contain the unit tests for all the services in the application.
 
 Click on the play button in front of each class name to run all the tests.
 
+Otherwise, if you want to run the tests using terminal, use the following command.
+
+`./gradlew cleanTest test`
+
 ## 2. Set up a MySQL database
 Here I will be using Docker to deploy a MySQL container. If you know other ways to set up a database, please skip this step after adding 
 the username and password of the database to `src/main/resources/application.properties` file.
@@ -37,7 +41,10 @@ i) If you want to run this application using Intellij, Go to `ShopApplication` c
 ii) If you want to run the application using the command line, follow the below steps.
 
 After Java 17 is properly set up, run the following command to build and start the application.
-`./gradlew bootRun`
+`./gradlew clean bootRun`
+
+Gradle is usually showing the build process as `83%`, but it is perfectly fine. You can use your 
+application without any issues. 
 
 Now the application is running at [http://localhost:3000](http://localhost:3000)
 To read the API docs go to [http://localhost:3000/docs](http://localhost:3000/docs)
