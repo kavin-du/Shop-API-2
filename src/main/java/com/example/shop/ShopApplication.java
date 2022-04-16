@@ -1,15 +1,21 @@
 package com.example.shop;
 
+import com.example.shop.model.AppUser;
 import com.example.shop.model.OrderRequest;
 import com.example.shop.model.Product;
+import com.example.shop.model.Role;
 import com.example.shop.service.OrderService;
 import com.example.shop.service.ProductService;
+import com.example.shop.service.UserService;
 import io.swagger.v3.oas.annotations.OpenAPIDefinition;
 import io.swagger.v3.oas.annotations.info.Info;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @SpringBootApplication
 @OpenAPIDefinition(info = @Info(title = "Shop API", version = "1.0", description = "Shop API documentation"))
@@ -20,7 +26,7 @@ public class ShopApplication {
 	}
 
 	@Bean
-	CommandLineRunner run(ProductService productService, OrderService orderService) {
+	CommandLineRunner run(ProductService productService, OrderService orderService, UserService userService) {
 		// populating the database with some initial values
 		return args -> {
 			// adding products
@@ -33,6 +39,12 @@ public class ShopApplication {
 			orderService.createOrder(new OrderRequest(2, 15));
 			orderService.createOrder(new OrderRequest(3, 6));
 
+			List<Role> roles = new ArrayList<>();
+			Role userRole = new Role("ROLE_USER");
+			roles.add(userRole);
+
+			userService.saveRole(userRole);
+			userService.saveUser(new AppUser("admin@admin.com", "admin", roles));
 		};
 	}
 
