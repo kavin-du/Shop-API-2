@@ -52,9 +52,9 @@ public class UserController {
 
     @PostMapping("login")
     @Operation(summary = "User login")
-    public ResponseEntity<?> login(@RequestBody Map<String, Object> body) {
-        String email = body.get("email").toString();
-        String password = body.get("password").toString();
+    public ResponseEntity<?> login(@Valid @RequestBody AppUser user) {
+        String email = user.getEmail();
+        String password = user.getPassword();
         try {
             authenticationManager.authenticate(
                     new UsernamePasswordAuthenticationToken(email, password)

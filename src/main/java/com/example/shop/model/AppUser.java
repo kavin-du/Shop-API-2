@@ -27,6 +27,7 @@ public class AppUser {
 
   @ManyToMany(fetch = FetchType.EAGER)
   @JoinColumn(name = "role_id")
+  @Schema(hidden = true)
   private Collection<Role> roles = new ArrayList<>();
 
   // no args constructor
